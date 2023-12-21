@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # Service PostgreSQL
+  db:
+    image: postgres:15-alpine # Utilisation de l'image PostgreSQL Alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./healthchecks:/healthchecks
+    healthcheck:
+      test: /healthchecks/postgres.sh
+      interval: "5s"
+    networks:
+      - humansbestfriend-network
+
+  # Service Redis
+  redis:
+    image: redis:latest # Utilisation de l'image Redis
+    volumes:
+      - ./healthchecks:/healthchecks
+    healthcheck:
+      test: /healthchecks/redis.sh
+      interval: "5s"
+    networks:
+      - humansbestfriend-network
+
+  # Service Worker
+  worker:
+    build:
+      context: ./worker # Chemin vers le dossier contenant le Dockerfile du worker
+      dockerfile: Dockerfile # Nom du Dockerfile (si standard, 'Dockerfile')
+    depends_on:
+      redis:
+        condition: service_healthy # Dépend de Redis, attend que Redis soit sain
+      db:
+        condition: service_healthy # Dépend de la base de données, attend que celle-ci soit saine
+    networks:
+      - humansbestfriend-network # Connecte le service au réseau humansbestfriend-network
+
+  # Service Vote
+  vote:
+    build:
+      context: ./vote # Chemin vers le dossier contenant le Dockerfile du vote
+      dockerfile: Dockerfile
+    volumes:
+      - ./vote:/usr/local/app # Montage de volume pour le code source
+    networks:
+      - humansbestfriend-network # Connecte le service au réseau humansbestfriend-network
+    ports:
+      - "5002:80" # Expose le port 80 du conteneur sur le port 5002 de l'hôte
+
+  # Service Seed-Data
+  seed-data:
+    build:
+      context: ./seed-data # Chemin vers le dossier contenant le Dockerfile de seed-data
+      dockerfile: Dockerfile
+    depends_on:
+      vote:
+        condition: service_healthy 
+    networks:
+      - humansbestfriend-network # Connecte le service au réseau humansbestfriend-network
+    restart: "no" # Ne redémarre pas automatiquement
+
+# Service Result
+  result: 
+    build:
+      context: ./result # Chemin vers le dossier contenant le Dockerfile du result
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy 
+    volumes:
+      - ./result:/usr/local/app # Montage de volume pour le code source
+    ports:
+      - "5001:80" # Expose le port 80 du conteneur sur le port 5001 de l'hôte
+      - "127.0.0.1:9229:9229" # Port pour le débogage Node.js
+    networks:
+      - humansbestfriend-network # Connecte le service au réseau humansbestfriend-network
+
+networks:
+  humansbestfriend-network: # Définition du réseau 
+  
+volumes:
+  db-data: # Volume pour la persistance des données PostgreSQL
+
+# docker-compose -f docker-compose.build.yml build
