@@ -31,37 +31,42 @@ Architecture Diagram
 ![image](https://github.com/Karima-brb/Docker-Project/assets/115697807/9422a5f6-78a3-4499-8027-30717130776f)
 
 # Setup Guide
-#Prerequisites
+#Installation et Configuration:
+- Mise à jour des paquets existants : 
+sudo apt install docker-compose
+-  Installation de Docker Compose :
+  sudo apt install docker-compose 
 Docker and Docker Compose installed. Refer to the Docker documentation for installation instructions.
 
 # Building the Application
-Worker Service
-Instructions for setting up the Worker service.
+- Construire les images :
+docker-compose -f docker-compose.build.yml build --no-cache
+docker compose up
 
 # Vote Service
-Instructions for setting up the Vote service.
+docker tag humans-bets-friend_vote localhost:5000/r_vote:v1
+docker push localhost:5000/r_vote:v1
+
 
 # Seed Data Service
-Instructions for setting up the Seed Data service.
+docker tag humans-best-friend_seed-data localhost: 5000/r_seed:v1
+docker push localhost:5000/r_seed:v1
+
 
 # Result Service
-Instructions for setting up the Result service.
+docker tag humans-best-friend_result localhost: 5000/r_result:v1
+docker push localhost:5000/r_result:v1
 
-# Running the Application
-Steps to run the application once all services are set up.
+- Vérification du Registre 
+curl localhost:5000/v2/_catalog 
 
 # Services
 Worker Service
-Details about the Worker service.
+- Envoi des Images au Registre Docker 
+docker tag humans-best-friend_worker localhost:5000/worker:v1
 
-# Vote Service
-Details about the Vote service.
-
-# Seed Data Service
-Details about the Seed Data service.
-
-# Result Service
-Details about the Result service.
+- Poussée de l'Image vers le Registre Local 
+docker push localhost:5000/worker:v1 
 
 # Deployment
 Instructions and notes about deploying the application, including setting up the network and dealing with Docker registries.
