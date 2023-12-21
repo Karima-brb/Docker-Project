@@ -40,21 +40,21 @@ Docker and Docker Compose installed. Refer to the Docker documentation for insta
 
 # Building the Application
 - Construire les images :
-docker-compose -f docker-compose.build.yml build --no-cache
+docker-compose -f docker-compose.build.yml build --no-cache,
 docker compose up
 
 # Vote Service
-docker tag humans-bets-friend_vote localhost:5000/r_vote:v1
+docker tag humans-bets-friend_vote localhost:5000/r_vote:v1,
 docker push localhost:5000/r_vote:v1
 
 
 # Seed Data Service
-docker tag humans-best-friend_seed-data localhost: 5000/r_seed:v1
+docker tag humans-best-friend_seed-data localhost: 5000/r_seed:v1,
 docker push localhost:5000/r_seed:v1
 
 
 # Result Service
-docker tag humans-best-friend_result localhost: 5000/r_result:v1
+docker tag humans-best-friend_result localhost: 5000/r_result:v1,
 docker push localhost:5000/r_result:v1
 
 - Vérification du Registre :
