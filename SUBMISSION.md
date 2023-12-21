@@ -12,7 +12,6 @@ Architecture
 Setup Guide
 Prerequisites
 Building the Application
-Running the Application
 Services
 Worker Service
 Vote Service
