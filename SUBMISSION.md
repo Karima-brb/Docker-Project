@@ -57,7 +57,7 @@ docker push localhost:5000/r_seed:v1
 docker tag humans-best-friend_result localhost: 5000/r_result:v1
 docker push localhost:5000/r_result:v1
 
-- Vérification du Registre 
+- Vérification du Registre :
 curl localhost:5000/v2/_catalog 
 
 # Services
