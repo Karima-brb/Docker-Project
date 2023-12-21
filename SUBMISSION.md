@@ -69,8 +69,4 @@ docker push localhost:5000/worker:v1
 
 # Deployment
 docker compose up
-# Notes
-Additional notes and limitations of the HumansBestFriend application.
 
-# Submission
-Ensure that the deployment is done inside a network called humansbestfriend-network.
