@@ -1,11 +1,11 @@
-# Docker-Project
+
 
 #                                                                          HumansBestFriend App
 
 # Introduction
 HumansBestFriend is a simple, distributed application designed to run across multiple Docker containers. It integrates various technologies including Python, Node.js, .NET, Redis, and Postgres. This README provides a step-by-step guide for setting up and running the application.
 
-Table of Contents
+# Table of Contents
 Requirement
 Getting Started
 Architecture
@@ -21,13 +21,14 @@ Result Service
 Deployment
 Notes
 Submission
-Requirement
+# Requirement
 The project must be run inside a virtual machine that supports Docker and Docker Compose.
 Getting Started
 This solution uses Python, Node.js, .NET, with Redis for messaging and Postgres for storage.
 
 Architecture
 Architecture Diagram
+![image](https://github.com/Karima-brb/Docker-Project/assets/115697807/9422a5f6-78a3-4499-8027-30717130776f)
 
 Description of the architecture and its components.
 
